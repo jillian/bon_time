@@ -8,10 +8,8 @@ development:
   adapter: postgresql
   encoding: unicode
   database: development
-  host: localhost
 
 test:
   adapter: postgresql
   database: pg_test
   encoding: unicode
-  host: localhost
