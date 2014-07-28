@@ -6,17 +6,21 @@ $headings-font-family: 'Pacifico', cursive;
 // // $navbar-default-color:#FFDC00;
 // // $body-bg:#950CE8;
 // $navbar-nav-font-family: 'Montserrat', sans-serif;
-
+h1 {text-shadow:3px 3px black;}
+h2 {text-shadow:2px 2px black;}
+h3 {text-shadow:1px 1px black;}
+.homes_container {width: 80%; margin: 0 auto;}
 
 @import "bootswatch/amelia/variables";
 @import "bootstrap-sprockets";
 @import "bootstrap";
-body { padding-top: 60px; width: 80%; margin: 0 auto; font-size: 1.5em;}
+body { padding-top: 60px; width: 80%; margin: 0 auto; font-size: 1.5em; background-color: #1263B2}
 // .navbar { font-family: 'Montserrat', sans-serif; }
-// #bs-example-navbar-collapse-1{background-color: #950CE8;}
+.container-fluid {background-color: #FF1100;}
 .field input{background-color: white;}
 select{background-color: #00717D;}
 @import "bootswatch/amelia/bootswatch";
+
 
 .outer_face {
 position: relative;
@@ -25,7 +29,8 @@ height: 250px;
 border-radius: 250px;
 background: white;
 box-shadow: inset 0 0 10px gray;
-border: 14px solid black
+border: 14px solid black;
+margin: 10px;
 }
 
 .outer_face::before, .outer_face::after, .outer_face .marker{ /* All hour markers */
