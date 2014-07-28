@@ -1,0 +1,39 @@
+<h3>Pending Friendship Requests</h3>
+
+<% current_user.requested_friendships.map do |i| %>
+  <p><%= i.name %></p>
+  <%= link_to "Accept", accept_invitation_friendship_path(i), method: :post, class: "btn btn-primary" %>
+  <%= link_to "Decline", decline_invitation_friendship_path(i), method: :post, class: "btn btn-primary" %>
+<% end %>
+<br>
+<h3>Friends</h3>
+
+<% current_user.friends.each do |friend| %>
+  <p><%= friend.name %></p>
+
+<% end %>
+<br>
+<h3>All Users</h3>
+<% @users.each do |user| %>
+  <% unless user == current_user || user == current_user.friends.include?(user) || user == current_user.requested_friendships.include?(user)  %>
+    <p><%= user.name %></p>
+    <p><%= user.email %></p>
+    <p>
+      <%= form_for user.inverse_friendships.build, url: friendships_path do |f| %>
+      <%= f.hidden_field :friend_id %>
+      <%= f.submit "Add Friend", class: "btn btn-primary" %>
+    </p>
+    <% end %>
+  <% end %>
+<% end %>
+
+
+<!-- .col-md-6
+  %h2 People
+  - @users.each do |user|
+    - unless user == current_user
+      - unless current_user.friends.include?(user)
+        %h3 
+          = link_to user.name, "/users/#{user.id}"
+        = link_to "/users/#{user.id}" do
+          = image_tag user.image.profile.url, :class => "userimage" -->

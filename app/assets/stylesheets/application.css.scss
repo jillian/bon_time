@@ -1,0 +1,38 @@
+// $input-color: black;
+// $input-color-placeholder: black;
+$headings-font-family: 'Pacifico', cursive;
+// $font-family-base: 'Montserrat', sans-serif;
+// $font-size-base: 14px;
+// // $navbar-default-color:#FFDC00;
+// // $body-bg:#950CE8;
+// $navbar-nav-font-family: 'Montserrat', sans-serif;
+
+
+@import "bootswatch/amelia/variables";
+@import "bootstrap-sprockets";
+@import "bootstrap";
+body { padding-top: 60px; width: 80%; margin: 0 auto; font-size: 1.5em;}
+// .navbar { font-family: 'Montserrat', sans-serif; }
+// #bs-example-navbar-collapse-1{background-color: #950CE8;}
+.field input{background-color: white;}
+select{background-color: #00717D;}
+@import "bootswatch/amelia/bootswatch";
+
+
+
+
+
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or vendor/assets/stylesheets of plugins, if any, can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the top of the
+ * compiled file, but it's generally better to create a new file per style scope.
+ *
+ *= require_self
+ *= require_bootstrap
+ *= require_tree .
+ */

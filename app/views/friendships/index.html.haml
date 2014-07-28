@@ -1,0 +1,31 @@
+- @users.each do |users|
+  - unless user == current_user
+    %tr
+      %td= user.first_name
+      - if user.friends
+        %td
+          %button.btn.btn-default.btn-block{disabled: "disabled", type: "button"} Friends
+      - else
+        %td
+          = form_for user.inverse_friendships.build, url: friendships_path do |f|
+            = f.hidden_field :friend_id
+            = f.submit "Befriend", class: "btn btn-primary"
+
+
+
+
+/ - @friends.each do |friend|
+/   - unless user == current_user
+/     %tr
+/       %td = 
+
+/       %td= user.name
+/       %br
+/       %td= user.email
+/       - if user.friends == true
+/         %td
+/           %button.btn.btn-default.btn-block{disabled: "disabled", type: "button"} Friends
+/       - else
+/         %td
+/           = link_to "Add Friend", friendships_path, method: 'POST', class: "btn btn-primary btn-block", type: "button"
+

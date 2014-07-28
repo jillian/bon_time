@@ -1,0 +1,44 @@
+%p#notice= notice
+
+%p
+  %b Name:
+  = @event.name
+%p
+  %b Date:
+  = @event.start_time
+%p
+  %b Address:
+  = @event.location.address
+%p
+  %b City:
+  = @event.location.city
+%p
+  %b Postcode:
+  = @event.location.postcode
+%p
+  %b Travel Mode:
+%p
+  = @event.attendances.first.transport_mode
+%p 
+ 
+#map-canvas
+
+:javascript
+   window.event_location = {
+    lat: #{@event.location.latitude},
+    lng: #{@event.location.longitude}
+    }
+:javascript
+   window.starting_location = {
+    lat: #{@event.attendances.first.location.latitude},
+    lng: #{@event.attendances.first.location.longitude}
+    }
+:javascript
+  window.transport_mode = '#{@event.attendances.where(user_id: current_user.id).first.try(:transport_mode)}'
+
+#trip_length
+
+
+= link_to 'Edit', edit_event_path(@event)
+\|
+= link_to 'Back', events_path

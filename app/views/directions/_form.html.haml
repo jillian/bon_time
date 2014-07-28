@@ -1,0 +1,11 @@
+%form#calculate-route{action: "#", method: "get", name: "calculate-route"}
+  %label{for: "from"} From:
+  %input#from{name: "from", placeholder: "An address", required: "required", size: "30", type: "text"}/
+  %a#from-link{href: "#"} Get my position
+  %br/
+  %label{for: "to"} To:
+  %input#to{name: "to", placeholder: "Another address", required: "required", size: "30", type: "text"}/
+  %a#to-link{href: "#"} Get my position
+  %br/
+  %input{type: "submit"}/
+  %input{type: "reset"}/

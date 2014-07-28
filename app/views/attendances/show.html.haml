@@ -1,0 +1,15 @@
+%p#notice= notice
+
+%p
+  %b User:
+  = @attendance.user
+%p
+  %b Event:
+  = @attendance.event
+%p
+  %b Location:
+  = @attendance.location
+
+= link_to 'Edit', edit_attendance_path(@attendance)
+\|
+= link_to 'Back', attendances_path

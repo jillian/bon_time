@@ -1,0 +1,50 @@
+= form_for @event do |f|
+  - if @event.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@event.errors.count, "error")} prohibited this event from being saved:"
+      %ul
+        - @event.errors.full_messages.each do |msg|
+          %li= msg
+  .field
+    = f.label :name
+    = f.text_field :name
+  .field
+    = f.label :start_time
+    = f.datetime_select :start_time
+    %br
+  = f.fields_for :location do |loc|
+    .field
+      = loc.label :address
+      = loc.text_field :address
+    .field
+      = loc.label :city
+      = loc.text_field :city
+    .field
+      = loc.label :postcode
+      = loc.text_field :postcode
+  %br
+
+  = fields_for :attendance do |atten|
+    = atten.select :transport_mode, {       |
+      "Driving"            => "DRIVING",    |
+      "Walking"            => "WALKING",    |
+      "Bike"               => "BICYCLING",  |
+      "Public Transport"   => "TRANSIT"},   |
+      selected: "Public Transport"          |
+  %br
+    
+  = fields_for :starting_location do |s_loc|
+    .field
+      = s_loc.collection_select(:location_id, current_user.locations, :id, :location_label, {prompt: "Leaving from?", selected: ""})
+  %br
+  //routing engine determines which controller handles it ... i've got access to whole user enviro
+  = f.fields_for :attendances, url: event_attendances_path(:event_id) do |inv|
+    .invite_field
+      / = inv.label :user_id
+      = inv.collection_select(:user_id, current_user.friends, :id, :name, {prompt: "Invite a friend", selected: ""})
+  %br
+  .actions
+    = f.submit 'Save'
+
+
+    
