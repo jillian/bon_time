@@ -75,7 +75,7 @@ class AttendancesController < ApplicationController
     end
   end
 
-  DELETE /attendances/1
+  # DELETE /attendances/1
   def destroy
     @attendance.destroy
     redirect_to event_path, notice: 'No longer attending'
