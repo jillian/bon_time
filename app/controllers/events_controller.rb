@@ -4,7 +4,8 @@ class EventsController < ApplicationController
   # GET /events
   # GET /events.json
   def index
-    @events = current_user.attendances.where("accepted IS TRUE").map(&:event).compact
+    # @events = current_user.attendances.where("accepted IS TRUE").map(&:event).compact
+    @events = current_user.events
     @pending_attendances = Attendance.where("accepted IS NULL").order('created_at ASC')
   end
 
@@ -47,7 +48,7 @@ class EventsController < ApplicationController
         #   creator_id: current_user.id
         #   })
         attendance = Attendance.new(
-          transport_mode: params[:event][:attendances_attributes]["0"][transport_mode],
+          transport_mode: params[:event][:attendances_attributes]["0"][:transport_mode],
           accepted: true,
           event_id: @event.id,
           creator_id: current_user.id)
