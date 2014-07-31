@@ -1,22 +1,24 @@
 <h3>Pending Friendship Requests</h3>
 <br/>
 <table>
-  <tbody>
+  <thead>
     <tr>
       <th>Name</th>
       <th>Email</th>
       <th></th>
     </tr>
-    <tr>
+  </thead>
+  <tbody>
     <% if current_user.requested_friendships.any? %>
-      <% current_user.requested_friendships.each do |request| %>
-        <td><%= request.first_name.capitalize %></td>
-        <td><%= request.email %></td>
-        <td><%= link_to "Accept", accept_invitation_friendship_path(request), method: :post, class: "btn btn-primary" %></td>
-        <td><%= link_to "Decline", decline_invitation_friendship_path(request), method: :post, class: "btn btn-primary" %></td>
+      <tr>
+        <% current_user.requested_friendships.each do |request| %>
+          <td><%= request.first_name.capitalize %></td>
+          <td><%= request.email %></td>
+          <td><%= link_to "Accept", accept_invitation_friendship_path(request), method: :post, class: "btn btn-primary" %></td>
+          <td><%= link_to "Decline", decline_invitation_friendship_path(request), method: :post, class: "btn btn-primary" %></td>
+        <%end%>
       </tr>
-    <%end%>
-  <% end %>
+    <% end %>
   </tbody>
 </table>
 <br>
@@ -30,19 +32,22 @@
     <p>You need to add some friends!</p>
 <% end %>
 <br>
+
 <h3>All Users</h3>
 <table>
-  <tbody>
+  <thead>
     <tr>
       <th>First name</th>
       <th>Last name</th>
       <th>Email</th>
       <th></th>
     </tr>
-      <% @users.each do |user| %>
+  </thead>
+  <tbody>
+    <% @users.each do |user| %>
       <tr>
         <% unless user == current_user %>
-          <% unless user == current_user.friends.include?(user) %> 
+          <% unless user == current_user.friends.include?(user) %>
             <% unless user == current_user.requested_friendships.include?(user)  %>
           <td><%= user.first_name.capitalize %></td>
           <td><%= user.last_name.capitalize %></td>
@@ -57,8 +62,8 @@
             <% end %>
           <% end %>
         <% end %>
-      <% end %>
-    </tr>
+       </tr>
+    <% end %>
   </tbody>
 </table>
 

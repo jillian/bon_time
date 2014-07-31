@@ -1,11 +1,12 @@
 source 'https://rubygems.org'
 
-ruby '2.1.1'
+# ruby '2.1.1'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.0.5'
 gem 'geocoder'
 
+gem "nokogiri", "1.6.3.1"
 gem "hirb"
 
 gem 'pg'
@@ -29,7 +30,7 @@ group :development, :test do
 end
 
 gem 'twilio-ruby'
-gem 'sidekiq' 
+gem 'sidekiq'
 gem 'sidekiq-failures'
 
 group :test do
