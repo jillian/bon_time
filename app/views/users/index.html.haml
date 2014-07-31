@@ -1,0 +1,64 @@
+- if current_user.requested_friendships.any?
+  %h3 Pending Friendship Requests
+  %table
+    %thead
+      %tr
+        %th Name
+        %th Email
+        %th
+    %tbody
+      %tr
+        - current_user.requested_friendships.each do |request|
+          %td= request.first_name.capitalize
+          %td= request.email
+          %td= link_to "Accept", accept_invitation_friendship_path(request), method: :post, class: "btn btn-primary"
+          %td= link_to "Decline", decline_invitation_friendship_path(request), method: :post, class: "btn btn-primary"
+%br/
+
+
+%h3 Friends
+%table
+  %thead
+    %tr
+      %th First name
+      %th Last name
+      %th
+  %tbody
+    - if current_user.friends.any?
+      - current_user.friends.each do |friend|
+        %tr
+          %td= friend.first_name.capitalize
+          %td= friend.last_name.capitalize
+          %td
+    - else
+      %tr
+        %td You need to add some friends!
+%br/
+
+
+%h3 All Users
+%table
+  %thead
+    %tr
+      %th First name
+      %th Last name
+      %th Email
+      %th
+  %tbody
+    - @users.each do |user|
+      %tr
+        - unless user == current_user
+          - unless current_user.friends.include?(user)
+            - unless current_user.requested_friendships.include?(user)
+              %td= user.first_name.capitalize
+              %td= user.last_name.capitalize
+              %td= user.email
+              %td
+                = form_for user.inverse_friendships.build, url: friendships_path do |f|
+                  = f.hidden_field :friend_id
+                  = f.submit "Add Friend", class: "btn btn-primary"
+
+- if devise_mapping.omniauthable?
+  - resource_class.omniauth_providers.each do |provider|
+    = link_to "Sign in with #{provider.to_s.titleize}", omniauth_authorize_path(resource_name, provider)
+    %br/

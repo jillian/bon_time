@@ -27,12 +27,12 @@
               - if user_signed_in?
                 %li
                   = link_to 'Events', events_path
-              - if user_signed_in?
                 %li
                   = link_to 'Users', users_path
-              - if user_signed_in?
                 %li
                   = link_to 'Update Profile', user_path(current_user)
+                %li
+                  = link_to 'Add an Event', new_event_path, class: "btn btn-warning"
 
             %ul.nav.navbar-nav.navbar-right
               - if user_signed_in?
@@ -51,7 +51,14 @@
                 %li
                   = link_to 'Sign Up', new_user_registration_path
 
-      %p.alert= alert
+      - if alert
+        .jumbotron
+          .container
+            %p.alert= alert
+      - elsif "#{params[:controller]}" == "homes"
+        .jumbotron
+          .container
+            %p This app has been deployed in Alpha... More features will be added soon!
 
     %main{id: "#{params[:controller]}", class: "#{params[:action]}"}
       = yield
