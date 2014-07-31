@@ -4,10 +4,13 @@ class EventsController < ApplicationController
   # GET /events
   # GET /events.json
   def index
-    @events = Event.where(creator_id: current_user.id)
-
+    # @events = Event.where(creator_id: current_user.id)
     # @events = current_user.attendances.where("accepted IS TRUE").map(&:event).compact
-    @pending_attendances = Attendance.where("accepted IS NULL").order('created_at ASC')
+    @events = Event.all
+
+    @pending_attendances = Attendance.where(attendee_id: current_user.id, accepted: false)
+    # @accepted_attendances = Attendance.where(attendee_id: current_user.id, accepted: true)
+    # @pending_attendances = Attendance.where("accepted IS NULL").order('created_at ASC')
   end
 
   # GET /events/1
@@ -40,30 +43,21 @@ class EventsController < ApplicationController
 
     respond_to do |format|
       if @event.save
-        # params[:attendances] contains the id of the user we want to invite
-        # attendance_params =
-        #   transport_mode = params[:event][:attendances_attributes]["0"].concat({
-        #   accepted: true,
-        #   event_id: @event.id,
-        #   creator_id: current_user.id
-        #   })
-
         attendance = Attendance.new(
           transport_mode: params[:event][:attendances_attributes]["0"][:transport_mode],
-          accepted: true,
           event_id: @event.id,
+          accepted: 'TRUE',
           creator_id: current_user.id)
-          # attendance_params)
-        attendance.save
+        attendance.save!
 
         friend_attendance = Attendance.new(
+          transport_mode: params[:event][:attendances_attributes]["0"][:transport_mode],
           event_id: @event.id,
           accepted: 'NULL',
           creator_id: @event.creator_id,
           attendee_id: params[:attendances][:attendee_id]
           )
-        friend_attendance.save
-
+        friend_attendance.save!
 
         flash[:notice] = "Invite sent"
 

@@ -1,25 +1,28 @@
-%h3 Name
-%p= current_user.name
-%br
+%h2= current_user.name
 %h3 Number
-%p= current_user.mobile_number
-%br
+- if current_user.mobile_number.present?
+  %p= current_user.mobile_number
+- else
+  %p This user hasn't added a mobile number.
+
 %h3 Email
 %p= current_user.email
 %br
-= link_to 'Update info', edit_user_path
 
-%h3 My addresses
-%table
-  %tbody
-  - current_user.locations.each do |loc|
-    %tr
-      %th
-        %b= loc.location_label
-    %tr
-      %td= loc.location_compact
+- if @user == current_user
+  = link_to 'Update info', edit_user_path
 
-%br
-%h3 Add Or Edit Address
-= render partial: "locations/form"
-%br
+  %h3 My addresses
+  %table
+    %tbody
+    - current_user.locations.each do |loc|
+      %tr
+        %th
+          %b= loc.location_label
+      %tr
+        %td= loc.location_compact
+
+  %br
+  %h3 Add Or Edit Address
+  = render partial: "locations/form"
+  %br
