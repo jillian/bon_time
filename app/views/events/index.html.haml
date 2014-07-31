@@ -1,55 +1,45 @@
-= link_to 'Add an Event', new_event_path, class: "btn btn-warning"
+- if @pending_attendances.any?
+  %h2 Event Invites
+  %table
+    %thead
+      %tr
+        %th What?
+        %th Where?
+        %th What time?
+        %th With?
+        %th
+    %tbody
+    - @pending_attendances.each do |invitation|
+      %tr
+        %td= invitation.event.name
+        %td= invitation.event.location.address
+        %td= invitation.event.start_time
+        %td= User.find(invitation.event.creator_id).name
+        %td= link_to "Accept", accept_invite_event_attendance_path(invitation.event.id, invitation.id), method: :post, class: "btn btn-primary"
+        %td= link_to "Out", decline_invite_event_attendance_path(invitation.event.id, invitation.id), method: :post, class: "btn btn-primary"
 
-.col-md-6
-  .list_headings
-  %h1 Upcoming events
-  %br
+%h2 All events
+- if @events.count == 0
+  = link_to 'Add an Event', new_event_path, class: "btn btn-warning"
+- else
   %table
     %tbody
       %tr
         %th What?
         %th Where?
-        %th When? 
+        %th When?
         %th With?
         %th
         %th
         %th
-
-      - @events.each do |event|
-        %tr
-          %td= event.name
-          %td= event.location.address
-          %td= event.start_time
-          %td= event.creator_id
-          %td= link_to 'Show', event, class: "btn btn-primary"
-          %td= link_to 'Edit', edit_event_path(event), class: "btn btn-primary"
-          %td= link_to 'Delete', event, :method => :delete, :data => { :confirm => 'Are you sure?' }, class: "btn btn-primary"
+        - @events.each do |event|
+          %tr
+            %td= event.name
+            %td= event.location.address
+            %td= event.start_time
+            %td= User.find(event.creator_id).name
+            %td= link_to 'Show', event, class: "btn btn-primary"
+            %td= link_to 'Edit', edit_event_path(event), class: "btn btn-primary"
+            %td= link_to 'Delete', event, :method => :delete, :data => { :confirm => 'Are you sure?' }, class: "btn btn-primary"
 
 %br
-
-
-%h1 Event Invites
-%br
-%table
-  %thead
-    %tr
-      %th What?
-      %th Where?
-      %th What time?
-      %th With?
-      %br
-  %tbody
-  - if @pending_attendances.any?
-    - @pending_attendances.each do |invitation|
-      %tr  
-        %td= invitation.event.name 
-        %td= invitation.event.location.address
-        %td= invitation.event.start_time
-        %td= invitation.event.creator_id
-        %td= link_to "Accept", accept_invite_event_attendance_path(invitation.event.id, invitation.id), method: :post, class: "btn btn-primary"
-        %td= link_to "Out", decline_invite_event_attendance_path(invitation.event.id, invitation.id), method: :post, class: "btn btn-primary"
-  - else
-    %p
-      You have no current event invitations.
-%br
-= link_to 'Add an Event', new_event_path, class: "btn btn-warning"

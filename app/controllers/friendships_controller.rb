@@ -21,14 +21,16 @@ class FriendshipsController < ApplicationController
   end
 
   def accept_invitation
-    friendship = current_user.inverse_friendships.find(params[:id])
+    friend = User.find(params[:id])
+    friendship = current_user.inverse_friendships(friend).first
     friendship.approved = true
     friendship.save!
     redirect_to :back
   end
 
   def decline_invitation
-    friendship = current_user.inverse_friendships.find(params[:id])
+    friend = User.find(params[:id])
+    friendship = current_user.inverse_friendships.(friend).first
     friendship.approved = false
     friendship.save!
     redirect_to :back

@@ -22,7 +22,6 @@ class UsersController < Devise::RegistrationsController
   end
 
   def update
-
   end
 
 end

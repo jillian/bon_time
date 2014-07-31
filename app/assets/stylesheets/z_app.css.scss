@@ -1,0 +1,191 @@
+body {
+  background: #F5F0D3;
+  color: #222;
+  font-size: 16px;
+  line-height: 1.2;
+  margin: 0 auto;
+
+  a {
+    color: #ad1d28;
+    text-decoration: none;
+
+    &:hover {
+      color: #ad1d28;
+      text-decoration: underline;
+    }
+  }
+
+}
+
+/********************** TEXT ***********************/
+
+h1, h2, h3, h4, h5, h6 {
+  text-shadow: 3px 3px rgba(255,255,255,0.3);
+}
+
+h2 {
+  font-size: 30px;
+  line-height: 60px;
+}
+
+
+/********************** HEADER ***********************/
+
+header {
+  #top-nav {
+    border-radius: 0;
+    padding: 10px 0;
+    margin: 0;
+
+    .container-fluid {
+      max-width: 960px;
+      margin: 0 auto;
+      height: 50px;
+
+      .navbar-brand {
+        font-family: "Pacifico", cursive;
+        font-weight: 500;
+        text-shadow: 2px 2px #000;
+        font-size: 40px;
+      }
+
+    }
+  }
+}
+
+/********************** JUMBOTRON ***********************/
+
+.jumbotron {
+  height: 50px;
+  padding: 10px 0;
+  background: #fff;
+  text-align: center;
+
+  .container {
+    max-width: 960px;
+    color: #ad1d28;
+  }
+}
+
+
+
+/********************** MAIN ***********************/
+
+main {
+  width: 960px;
+  margin: 0 auto 100px;
+}
+
+
+/*********************** PAGE SPECIFIC ***************/
+
+.homes_container {
+  text-align: center;
+
+  h1 {
+    text-align: center;
+    margin: 20px
+  }
+
+  h2 {
+     font-family: Lato, Arial, sans-serif;
+  }
+
+  .outer_face {
+    margin: 30px auto;
+  }
+
+  .inner_face::after {
+    content: "";
+  }
+ }
+
+.new {
+  h2 {
+    text-align: center;
+  }
+}
+
+/********************** TABLES ***********************/
+
+table {
+  width: 100%;
+
+  thead {
+    font-size: 20px;
+    line-height: 40px;
+  }
+
+  tbody {
+    tr {
+      border-bottom: 1px solid #fff;
+    }
+
+    .btn {
+      float: right;
+    }
+  }
+}
+
+
+
+/********************** FORMS ***********************/
+
+input[type=password],
+input[type=email],
+input[type=text],
+input[type=submit] {
+  display: block;
+  border: none;
+  padding: 0 5px;
+  font-family: Lato, Arial, sans-serif;
+}
+
+input[type=password],
+input[type=email],
+input[type=text] {
+  background: #FFF;
+}
+
+input[type=submit] {
+  float: right;
+  background: #ad1d28;
+  color: #fff;
+}
+
+select {
+  min-width: 100px;
+  color: #fff;
+  background: #ad1d28;
+}
+
+form {
+  div {
+    line-height: 2;
+  }
+}
+
+form#registrations {
+
+}
+
+form#new_user {
+  width: 300px;
+  margin: 0 auto;
+
+  input[type=password],
+  input[type=email],
+  input[type=text] {
+    min-width: 300px;
+  }
+
+  input[type=submit] {
+    background: #ad1d28;
+    padding: 10px;
+    color: #fff;
+    font-family: "Pacifico", cursive;
+    font-weight: 500;
+    text-shadow: 2px 2px #000;
+  }
+
+}
