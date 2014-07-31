@@ -31,8 +31,7 @@
                   = link_to 'Users', users_path
                 %li
                   = link_to 'Profile', user_path(current_user)
-                %li
-                  = link_to 'Add an Event', new_event_path, class: "btn btn-warning"
+
 
             %ul.nav.navbar-nav.navbar-right
               - if user_signed_in?
@@ -45,6 +44,8 @@
                       = link_to 'Change Password', edit_user_registration_path
                     %li
                       = link_to 'Logout', destroy_user_session_path, method: 'delete'
+                %li
+                  = link_to 'Add an Event', new_event_path, class: "btn btn-warning"
               - else
                 %li
                   = link_to 'Login', new_user_session_path
@@ -54,7 +55,11 @@
       - if alert
         .jumbotron
           .container
-            %p.alert= alert
+            %p= alert
+      - elsif notice
+        .jumbotron
+          .container
+            %p= notice
       - elsif "#{params[:controller]}" == "homes"
         .jumbotron
           .container
