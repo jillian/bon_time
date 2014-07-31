@@ -10,31 +10,16 @@
 = link_to 'Update info', edit_user_path
 
 %h3 My addresses
-- current_user.locations.each do |loc|
-  %tr
-    %td
-      %p
-        %b= loc.location_label 
-        = loc.location_compact
+%table
+  %tbody
+  - current_user.locations.each do |loc|
+    %tr
+      %th
+        %b= loc.location_label
+    %tr
+      %td= loc.location_compact
 
 %br
 %h3 Add Or Edit Address
 = render partial: "locations/form"
 %br
-
-.container
-  .row
-    .col-md-6
-      .page-header
-        %h2 Pending Friend Requests
-        #table-responsive
-          %table{class: "table table-striped table-hover"}
-            %tr
-            - if @user == current_user && current_user.requested_friendships.present?
-              - current_user.requested_friendships.map do |i|
-                %p= i.name
-                = link_to "Accept", accept_invitation_friendship_path(i), method: :post, class: "btn btn-primary"
-                = link_to "Decline", decline_invitation_friendship_path(i), method: :post, class: "btn btn-primary"
-            - else
-              %td No Invites
-

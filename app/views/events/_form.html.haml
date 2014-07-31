@@ -24,7 +24,7 @@
       = loc.text_field :postcode
   %br
 
-  = fields_for :attendance do |atten|
+  = f.fields_for :attendances do |atten|
     = atten.select :transport_mode, {       |
       "Driving"            => "DRIVING",    |
       "Walking"            => "WALKING",    |
@@ -33,15 +33,15 @@
       selected: "Public Transport"          |
   %br
     
-  = fields_for :starting_location do |s_loc|
+  = f.fields_for :attendances do |start|
     .field
-      = s_loc.collection_select(:location_id, current_user.locations, :id, :location_label, {prompt: "Leaving from?", selected: ""})
+      = start.collection_select(:location_id, current_user.locations, :id, :location_label, {prompt: "Leaving from?", selected: ""})
   %br
-  //routing engine determines which controller handles it ... i've got access to whole user enviro
-  = f.fields_for :attendances, url: event_attendances_path(:event_id) do |inv|
+
+  = fields_for :attendances do |inv|
     .invite_field
-      / = inv.label :user_id
-      = inv.collection_select(:user_id, current_user.friends, :id, :name, {prompt: "Invite a friend", selected: ""})
+      = inv.collection_select(:attendee_id, current_user.friends, :id, :name, {prompt: "Invite a friend", selected: ""})
+
   %br
   .actions
     = f.submit 'Save'

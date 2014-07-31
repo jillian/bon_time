@@ -1,3 +1,4 @@
+
 $(document).ready(function(){
   directionsService = new google.maps.DirectionsService();
 
@@ -33,25 +34,16 @@ $(document).ready(function(){
   // Javascript Geolocation API
   var getDirections = function(location) {
     directionsDisplay = new google.maps.DirectionsRenderer();
-    var mapOptions = {
-      zoom: 14,
-      center: new google.maps.LatLng(
-        location.coords.latitude, location.coords.longitude
-      )
-    }
-    var map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
-    directionsDisplay.setMap(map);
     new google.maps.DirectionsService().route(request, getTripTime);
   };
   
-
   if (navigator.geolocation) {
     navigator.geolocation
       .getCurrentPosition(getDirections, handleLocationError);
     navigator.geolocation
       .watchPosition(getDirections, handleLocationError);
   } else{
-    alert("oops, this browser does not support HTML5 geolocation API")
+    alert("oops, this browser does not support the HTML5 geolocation API")
   }
 
   calcRoute()

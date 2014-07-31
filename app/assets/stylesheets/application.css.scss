@@ -1,24 +1,30 @@
 // $input-color: black;
 // $input-color-placeholder: black;
 $headings-font-family: 'Pacifico', cursive;
-// $font-family-base: 'Montserrat', sans-serif;
-// $font-size-base: 14px;
-// // $navbar-default-color:#FFDC00;
-// // $body-bg:#950CE8;
-// $navbar-nav-font-family: 'Montserrat', sans-serif;
+.navbar-brand {font-family: 'Pacifico', cursive;}
 h1 {text-shadow:3px 3px black;}
 h2 {text-shadow:2px 2px black;}
-h3 {text-shadow:1px 1px black;}
+h3, label, th, td, p {text-shadow:1px 1px black;}
+label {text-shadow:1px 1px black;}
 .homes_container {width: 80%; margin: 0 auto;}
+.alert {margin:15px;}
+select {background-color: #198EFF}
+// input-submit {background-color: #FF1100}
+#event_name {color: white;}
+#event_location_attributes_address {color: white;}
+#event_location_attributes_city {color: white;}
+#event_location_attributes_postcode {color: white;}
+input {background-color: #198EFF; color: white}
+.navbar-brand {font-family: 'Pacifico', cursive;}
+ul.nav.navbar {font-family: 'Lato', sans-serif; font-size: 1.2em}
+nav.navbar.navbar-default.navbar-fixed-top {background-color: #FF1100;padding:20px;}
 
 @import "bootswatch/amelia/variables";
 @import "bootstrap-sprockets";
 @import "bootstrap";
-body { padding-top: 60px; width: 80%; margin: 0 auto; font-size: 1.5em; background-color: #1263B2}
-// .navbar { font-family: 'Montserrat', sans-serif; }
-.container-fluid {background-color: #FF1100;}
-.field input{background-color: white;}
-select{background-color: #00717D;}
+
+body { padding-top: 80px; width: 80%; margin: 0 auto; font-size: 1.5em; background-color: #1263B2;}
+
 @import "bootswatch/amelia/bootswatch";
 
 
@@ -30,7 +36,7 @@ border-radius: 250px;
 background: white;
 box-shadow: inset 0 0 10px gray;
 border: 14px solid black;
-margin: 10px;
+margin: 0 auto;
 }
 
 .outer_face::before, .outer_face::after, .outer_face .marker{ /* All hour markers */

@@ -1,39 +1,65 @@
 <h3>Pending Friendship Requests</h3>
-
-<% current_user.requested_friendships.map do |i| %>
-  <p><%= i.name %></p>
-  <%= link_to "Accept", accept_invitation_friendship_path(i), method: :post, class: "btn btn-primary" %>
-  <%= link_to "Decline", decline_invitation_friendship_path(i), method: :post, class: "btn btn-primary" %>
-<% end %>
+<br/>
+<table>
+  <tbody>
+    <tr>
+      <th>Name</th>
+      <th>Email</th>
+      <th></th>
+    </tr>
+    <tr>
+    <% if current_user.requested_friendships.any? %>
+      <% current_user.requested_friendships.each do |request| %>
+        <td><%= request.first_name.capitalize %></td>
+        <td><%= request.email %></td>
+        <td><%= link_to "Accept", accept_invitation_friendship_path(request), method: :post, class: "btn btn-primary" %></td>
+        <td><%= link_to "Decline", decline_invitation_friendship_path(request), method: :post, class: "btn btn-primary" %></td>
+      </tr>
+    <%end%>
+  <% end %>
+  </tbody>
+</table>
 <br>
+
 <h3>Friends</h3>
-
-<% current_user.friends.each do |friend| %>
-  <p><%= friend.name %></p>
-
+<% if current_user.friends.any? %>
+  <% current_user.friends.each do |friend| %>
+    <li><%= friend.first_name.capitalize + " " + friend.last_name.capitalize %></li>
+  <%end %>
+<% else %>
+    <p>You need to add some friends!</p>
 <% end %>
 <br>
 <h3>All Users</h3>
-<% @users.each do |user| %>
-  <% unless user == current_user || user == current_user.friends.include?(user) || user == current_user.requested_friendships.include?(user)  %>
-    <p><%= user.name %></p>
-    <p><%= user.email %></p>
-    <p>
-      <%= form_for user.inverse_friendships.build, url: friendships_path do |f| %>
-      <%= f.hidden_field :friend_id %>
-      <%= f.submit "Add Friend", class: "btn btn-primary" %>
-    </p>
-    <% end %>
-  <% end %>
-<% end %>
+<table>
+  <tbody>
+    <tr>
+      <th>First name</th>
+      <th>Last name</th>
+      <th>Email</th>
+      <th></th>
+    </tr>
+      <% @users.each do |user| %>
+      <tr>
+        <% unless user == current_user %>
+          <% unless user == current_user.friends.include?(user) %> 
+            <% unless user == current_user.requested_friendships.include?(user)  %>
+          <td><%= user.first_name.capitalize %></td>
+          <td><%= user.last_name.capitalize %></td>
+          <td><%= user.email %></td>
+          <td>
+            <%= form_for user.inverse_friendships.build, url: friendships_path do |f| %>
+            <%= f.hidden_field :friend_id %>
+            <%= f.submit "Add Friend", class: "btn btn-primary" %>
+            <% end %>
+          </td>
+
+            <% end %>
+          <% end %>
+        <% end %>
+      <% end %>
+    </tr>
+  </tbody>
+</table>
 
 
-<!-- .col-md-6
-  %h2 People
-  - @users.each do |user|
-    - unless user == current_user
-      - unless current_user.friends.include?(user)
-        %h3 
-          = link_to user.name, "/users/#{user.id}"
-        = link_to "/users/#{user.id}" do
-          = image_tag user.image.profile.url, :class => "userimage" -->

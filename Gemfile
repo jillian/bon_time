@@ -6,6 +6,8 @@ ruby '2.1.1'
 gem 'rails', '4.0.5'
 gem 'geocoder'
 
+gem "hirb"
+
 gem 'pg'
 gem 'devise'
 gem 'acts_as_friendable', github: "rhannequin/acts_as_friendable", branch: "master"

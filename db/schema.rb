@@ -17,11 +17,12 @@ ActiveRecord::Schema.define(version: 20140723183148) do
   enable_extension "plpgsql"
 
   create_table "attendances", force: true do |t|
-    t.integer  "user_id"
     t.integer  "event_id"
     t.integer  "location_id"
     t.boolean  "accepted"
     t.integer  "trip_duration"
+    t.integer  "attendee_id"
+    t.integer  "creator_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "transport_mode"
@@ -29,28 +30,15 @@ ActiveRecord::Schema.define(version: 20140723183148) do
 
   add_index "attendances", ["event_id"], name: "index_attendances_on_event_id", using: :btree
   add_index "attendances", ["location_id"], name: "index_attendances_on_location_id", using: :btree
-  add_index "attendances", ["user_id"], name: "index_attendances_on_user_id", using: :btree
-
-  create_table "event_invitations", force: true do |t|
-    t.integer  "user_id"
-    t.integer  "event_id"
-    t.boolean  "accepted"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "event_invitations", ["event_id"], name: "index_event_invitations_on_event_id", using: :btree
-  add_index "event_invitations", ["user_id"], name: "index_event_invitations_on_user_id", using: :btree
 
   create_table "events", force: true do |t|
     t.datetime "start_time"
-    t.integer  "user_id"
+    t.integer  "creator_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "name"
+    t.integer  "location_id"
   end
-
-  add_index "events", ["user_id"], name: "index_events_on_user_id", using: :btree
 
   create_table "friendships", force: true do |t|
     t.integer  "user_id"

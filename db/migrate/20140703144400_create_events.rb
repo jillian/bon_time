@@ -3,8 +3,8 @@ class CreateEvents < ActiveRecord::Migration
     create_table :events do |t|
 
       t.datetime :start_time
-      t.references :user, index: true
-
+      t.integer :creator_id
+      
       t.timestamps
     end
   end

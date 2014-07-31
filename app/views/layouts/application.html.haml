@@ -6,7 +6,8 @@
     = stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true
     = javascript_include_tag "application", "data-turbolinks-track" => true
     = csrf_meta_tags
-    %link{href: "http://fonts.googleapis.com/css?family=Pacifico", rel: "stylesheet", type: "text/css"}/
+    %link{href: "http://fonts.googleapis.com/css?family=Pacifico", rel: "stylesheet", type: "text/css"}
+    %link{href: "http://fonts.googleapis.com/css?family=Lato", rel:'stylesheet', type:'text/css'}
   %body
     %nav{class: "navbar navbar-default navbar-fixed-top", role: "navigation"}
       .container-fluid
@@ -16,16 +17,18 @@
             %span.icon-bar
             %span.icon-bar
             %span.icon-bar
-          = link_to 'b.on time', root_path, class: 'navbar-brand glyphicon'
+          = link_to 'b.on time', root_path, class: 'navbar-brand'
         #bs-example-navbar-collapse-1.collapse.navbar-collapse
           %ul.nav.navbar-nav
-            %li
-              = link_to 'Events', events_path
-            %li
-              = link_to 'Users', users_path
-          - if user_signed_in?
-            %li
-            = link_to 'Update Profile', user_path(current_user)
+            - if user_signed_in?
+              %li
+                = link_to 'Events', events_path
+            - if user_signed_in?    
+              %li
+                = link_to 'Users', users_path
+            - if user_signed_in?
+              %li
+                = link_to 'Update Profile', user_path(current_user)
           %ul.nav.navbar-nav.navbar-right
             - if user_signed_in?
               %li.dropdown

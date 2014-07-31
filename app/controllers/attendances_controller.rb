@@ -25,11 +25,10 @@ class AttendancesController < ApplicationController
   # POST /attendances.json
   def create
     @event = Event.find(params[:event_id])
-    @attendance = @event.attendances.build attendance_params
+    @attendances = @event.attendances.build attendance_params
 
     respond_to do |format|
-      if @attendance.save
-        # send_invite
+      if @attendances.save
         format.html { redirect_to @attendance, notice: 'Attendance was successfully created.' }
         format.json { render action: 'show', status: :created, location: @attendance }
       else
@@ -55,25 +54,36 @@ class AttendancesController < ApplicationController
 
   def accept_invite
     @attendance = Attendance.find(params[:id])
-    @attendance.accept!
+    @attendance.accepted = 1
+    @attendance.save
+    # if @attendance.save
+    #   event = Event.find(@attendance.event_id)
+    #   current_user.events << event
+    # end
     redirect_to :back
   end
 
   def decline_invite
     @attendance = Attendance.find(params[:id])
-    @attendance.reject!
+    @attendance.accepted = false
+    @attendance.save!
+    # No need to save the event to the user's events here
+    # because the user has declined the event.
     redirect_to :back
   end
 
-  def send_invite
-    if user_signed_in?
-    @user = User.find params[:id]
-    Attendance.create!(user: current_user, friend: @user)
-    flash[:notice] = "Invite sent"
-  else 
-    redirect_to new_user_session_path, notice: "You need to sign in or sign up before continuing."
-    end
-  end
+  # def send_invite
+  #   if user_signed_in?
+  #     puts params[:attendances]
+  #     flash[:notice] = params[:attendances]
+
+  #     # @user = User.find(params[:id])
+  #     # Attendance.create!(host_id: current_user.id, friend: @user)
+  #     # flash[:notice] = "Invite sent"
+  #   else 
+  #     redirect_to new_user_session_path, notice: "You need to sign in or sign up before continuing."
+  #   end
+  # end
 
   # DELETE /attendances/1
   def destroy
@@ -89,7 +99,6 @@ class AttendancesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def attendance_params
-      # params.require(:attendance).permit(:user_id, :event_id, :location_id)
-      params.require(:attendance).permit(:invitee)
+      params.require(:attendance).permit(:attendee, :attendee_id, :location_id, :event_id)
     end
 end

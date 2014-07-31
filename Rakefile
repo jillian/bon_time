@@ -3,4 +3,4 @@
 
 require File.expand_path('../config/application', __FILE__)
 
-TimeOn::Application.load_tasks
+BonTime::Application.load_tasks

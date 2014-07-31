@@ -1,4 +1,4 @@
-TimeOn::Application.routes.draw do
+BonTime::Application.routes.draw do
   root "homes#index"
 
   resources :messages, only: [:new, :create]
@@ -14,8 +14,9 @@ TimeOn::Application.routes.draw do
   resources :locations
 
   resources :events do
-      match '/events/new', to: 'events#create', via: :post
-    resources :attendances, only: [:create] do
+    match '/events/new', to: 'events#create', via: :post
+    resources :attendances do
+    # , only: [:create] do
       member do
         post :send_invite
         post :accept_invite
@@ -28,12 +29,8 @@ TimeOn::Application.routes.draw do
 
   devise_scope :user do 
     resources :users, only: [:index, :show, :edit] do
-      # member do
-      #   get :befriend
-      # end
     match '/users/sign_up', to: 'registrations#new', via: :post
     end
   end
 
-  # post '/locations', to: 'locations#create'
 end
