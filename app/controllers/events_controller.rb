@@ -39,15 +39,28 @@ class EventsController < ApplicationController
     respond_to do |format|
       if @event.save
         # params[:attendances] contains the id of the user we want to invite 
-        attendance_params = params[:event][:attendances_attributes]["0"].concat({
+        binding.pry
+        # attendance_params = 
+        #   transport_mode = params[:event][:attendances_attributes]["0"].concat({
+        #   accepted: true,
+        #   event_id: @event.id,
+        #   creator_id: current_user.id
+        #   })
+        attendance = Attendance.new(
+          transport_mode: params[:event][:attendances_attributes]["0"][transport_mode],
           accepted: true,
           event_id: @event.id,
-          creator_id: current_user.id
-          })
-        attendance = Attendance.new(attendance_params)
+          creator_id: current_user.id)
+          # attendance_params)
         attendance.save
 
-        friend_attendance
+        friend_attendance = Attendance.new(
+          event_id: @event.id,
+          accepted: 'NULL',
+          creator_id: @event.creator_id,
+          attendee_id: params[:attendances][:attendee_id]
+          )
+        friend_attendance.save
 
         
         flash[:notice] = "Invite sent"
