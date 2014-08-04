@@ -45,10 +45,7 @@ class EventsController < ApplicationController
       if @event.save
         attendance = Attendance.new(
           transport_mode: params[:event][:attendances_attributes]["0"][:transport_mode],
-<<<<<<< HEAD
-          accepted: true,
-=======
->>>>>>> 9f8e369e3a92d5ba486762ca0a03b80a34e37e06
+
           event_id: @event.id,
           accepted: 'TRUE',
           creator_id: current_user.id)

@@ -32,9 +32,10 @@
                 %li
                   = link_to 'Profile', user_path(current_user)
 
-
             %ul.nav.navbar-nav.navbar-right
               - if user_signed_in?
+                %li
+                  = link_to 'Add an Event', new_event_path, class: "btn btn-warning"
                 %li.dropdown
                   %a.dropdown-toggle{"data-toggle" => "dropdown", href: "#"}
                     = current_user.first_name
@@ -44,8 +45,6 @@
                       = link_to 'Change Password', edit_user_registration_path
                     %li
                       = link_to 'Logout', destroy_user_session_path, method: 'delete'
-                %li
-                  = link_to 'Add an Event', new_event_path, class: "btn btn-warning"
               - else
                 %li
                   = link_to 'Login', new_user_session_path
