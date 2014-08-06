@@ -4,13 +4,15 @@ class EventsController < ApplicationController
   # GET /events
   # GET /events.json
   def index
-    # @events = Event.where(creator_id: current_user.id)
+    @events = current_user.events
     # @events = current_user.attendances.where("accepted IS TRUE").map(&:event).compact
-    @events = Event.all
+    # @events = Event.all
 
-    @pending_attendances = Attendance.where(attendee_id: current_user.id, accepted: false)
-    # @accepted_attendances = Attendance.where(attendee_id: current_user.id, accepted: true)
-    # @pending_attendances = Attendance.where("accepted IS NULL").order('created_at ASC')
+    @pending_attendances = Attendance.where('attendee_id = current_user.id AND accepted IS NULL')
+  end
+
+  def attendances
+    @pending_attendances = Attendance.where('attendee_id = current_user.id AND accepted IS NULL')
   end
 
   # GET /events/1
@@ -39,7 +41,8 @@ class EventsController < ApplicationController
   def create
     @event = current_user.events.new(event_params)
     @event.creator = current_user
-
+    # @event.address = params[:event][:location_attributes][:address]
+    binding.pry
 
     respond_to do |format|
       if @event.save
@@ -47,18 +50,17 @@ class EventsController < ApplicationController
           transport_mode: params[:event][:attendances_attributes]["0"][:transport_mode],
 
           event_id: @event.id,
+          starting_location_id: params[:event][:attendances_attributes]["1"][:location_id],
           accepted: 'TRUE',
           creator_id: current_user.id)
         attendance.save!
 
-        friend_attendance = Attendance.new(
-          transport_mode: params[:event][:attendances_attributes]["0"][:transport_mode],
+        pending_attendance = Attendance.new(
           event_id: @event.id,
-          accepted: 'NULL',
           creator_id: @event.creator_id,
           attendee_id: params[:attendances][:attendee_id]
           )
-        friend_attendance.save!
+        pending_attendance.save!
 
         flash[:notice] = "Invite sent"
 
@@ -103,6 +105,6 @@ class EventsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def event_params
-      params.require(:event).permit(:name, :start_time, :date, :time, :creator, :attendances["attendee_id"], {location_attributes:[:address, :city, :postcode, :latitude, :longitude]}, {attendances_attributes:[:transport_mode, :attendee_id, :host_id, :name, :location_id]})
+      params.require(:event).permit(:name, :start_time, :date, :time, :creator, :attendances["attendee_id"], {location_attributes:[:address, :city, :postcode, :latitude, :longitude]}, {attendances_attributes:[:transport_mode, :attendee_id, :host_id, :name, :starting_location_id]})
     end
 end

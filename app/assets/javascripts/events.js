@@ -2,6 +2,7 @@
 $(document).ready(function(){
   console.log("heyooo")
 
+/*******clock ********/
   var $hands = $('div.hand')
 
   window.requestAnimationFrame = window.requestAnimationFrame
@@ -23,6 +24,10 @@ function updateclock(){
   }
 
   requestAnimationFrame(updateclock)
+
+  /*****end of clock ******/
+
+  /*****trip duration with Google Maps API **************/
 
   directionsService = new google.maps.DirectionsService();
 
@@ -71,7 +76,14 @@ function updateclock(){
   }
 
   calcRoute()
+
+  /********end of trip duration calculation***********/
 });
+
+
+
+
+
 
 // var event
 // var leaveAlertText = "You should leave your house in "

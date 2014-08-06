@@ -19,10 +19,6 @@ class Event < ActiveRecord::Base
   #   TimeQueryWorker.perform_at(alert_time, id)
   # end
 
-  def attend()
-
-  end
-
   # def address_compact
   #   [address, city, postcode].compact.join(", ")
   # end

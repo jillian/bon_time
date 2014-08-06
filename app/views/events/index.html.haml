@@ -1,27 +1,30 @@
-- if @pending_attendances.any?
-  %h2 Event Invites
-  %table
-    %thead
-      %tr
-        %th What?
-        %th Where?
-        %th What time?
-        %th With?
-        %th
-    %tbody
-    - @pending_attendances.each do |invitation|
-      %tr
-        %td= invitation.event.name
-        %td= invitation.event.location.address
-        %td= invitation.event.start_time
-        %td= User.find(invitation.event.creator_id).name
-        %td= link_to "Accept", accept_invite_event_attendance_path(invitation.event.id, invitation.id), method: :post, class: "btn btn-primary"
-        %td= link_to "Out", decline_invite_event_attendance_path(invitation.event.id, invitation.id), method: :post, class: "btn btn-primary"
+/ / - if @pending_attendances.any?
+/ / - if creator_id != current_user.id
 
-%h2 All events
+/ %h2 Event Invites
+/ %table
+/   %thead
+/     %tr
+/       %th What?
+/       %th Where?
+/       %th What time?
+/       %th With?
+/       %th
+/   %tbody
+/   - @pending_attendances.each do |invitation|
+/     %tr
+/       %td= invitation.event.name
+/       %td= invitation.event.location.address
+/       %td= invitation.event.start_time
+/       %td= User.find(invitation.event.creator_id).name
+/       %td= link_to "Accept", accept_invite_event_attendance_path(invitation.event.id, invitation.id), method: :post, class: "btn btn-primary"
+/       %td= link_to "Out", decline_invite_event_attendance_path(invitation.event.id, invitation.id), method: :post, class: "btn btn-primary"
+
 - if @events.count == 0
+  %h1 No upcoming events
   = link_to 'Add an Event', new_event_path, class: "btn btn-warning"
-- else
+- else  
+  %h2 Upcoming Events
   %table
     %tbody
       %tr
@@ -35,7 +38,7 @@
         - @events.each do |event|
           %tr
             %td= event.name
-            %td= event.location.address
+            %td= Location.find(event.location_id).address
             %td= event.start_time
             %td= User.find(event.creator_id).name
             %td= link_to 'Show', event, class: "btn btn-primary"

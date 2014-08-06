@@ -18,7 +18,7 @@ ActiveRecord::Schema.define(version: 20140723183148) do
 
   create_table "attendances", force: true do |t|
     t.integer  "event_id"
-    t.integer  "location_id"
+    t.integer  "starting_location_id"
     t.boolean  "accepted"
     t.integer  "trip_duration"
     t.integer  "attendee_id"
@@ -29,7 +29,6 @@ ActiveRecord::Schema.define(version: 20140723183148) do
   end
 
   add_index "attendances", ["event_id"], name: "index_attendances_on_event_id", using: :btree
-  add_index "attendances", ["location_id"], name: "index_attendances_on_location_id", using: :btree
 
   create_table "events", force: true do |t|
     t.datetime "start_time"

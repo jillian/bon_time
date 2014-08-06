@@ -25,10 +25,11 @@ class AttendancesController < ApplicationController
   # POST /attendances.json
   def create
     @event = Event.find(params[:event_id])
-    @attendances = @event.attendances.build attendance_params
+    @attendance = @event.attendances.build attendance_params
 
     respond_to do |format|
       if @attendances.save
+
         format.html { redirect_to @attendance, notice: 'Attendance was successfully created.' }
         format.json { render action: 'show', status: :created, location: @attendance }
       else
@@ -52,14 +53,17 @@ class AttendancesController < ApplicationController
     end
   end
 
+
   def accept_invite
     @attendance = Attendance.find(params[:id])
-    @attendance.accepted = 1
+    @attendance.accepted = 'TRUE',
     @attendance.save
-    # if @attendance.save
-    #   event = Event.find(@attendance.event_id)
-    #   current_user.events << event
-    # end
+    binding.pry
+    if @attendance.save
+      event = Event.find(@attendance.event_id)
+      starting_location_id = Location.
+      current_user.events << event
+    end
     redirect_to :back
   end
 
