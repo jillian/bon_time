@@ -4,8 +4,9 @@ class EventsController < ApplicationController
   # GET /events 
   # GET /events.json
   def index
-    @events = current_user.attendances.where("accepted IS TRUE").map(&:event).compact
-    @events = Event.all
+    # @events = current_user.events
+    @events = current_user.attendances.where("accepted IS TRUE")
+    # .map(&:event).compact
     @user_id = current_user.id 
     @pending_attendances = current_user.attendances.where("accepted IS NULL")
   end
@@ -51,6 +52,7 @@ class EventsController < ApplicationController
           starting_location_id: params[:event][:attendances_attributes]["1"][:location_id],
           accepted: 'TRUE',
           creator_id: current_user.id)
+          binding.pry
         attendance.save!
 
         pending_attendance = Attendance.new(
@@ -103,6 +105,6 @@ class EventsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def event_params
-      params.require(:event).permit(:name, :start_time, :date, :time, :creator, :attendances["attendee_id"], {location_attributes:[:address, :city, :postcode, :latitude, :longitude]}, {attendances_attributes:[:transport_mode, :attendee_id, :host_id, :name, :starting_location_id]})
+      params.require(:event).permit(:name, :start_time, :date, :time, :creator, :attendances["attendee_id"], :attendances["creator_id"], {location_attributes:[:address, :city, :postcode, :latitude, :longitude]}, {attendances_attributes:[:transport_mode, :attendee_id, :creator_id, :name, :starting_location_id, :accepted]})
     end
 end
