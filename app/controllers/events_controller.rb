@@ -1,14 +1,13 @@
 class EventsController < ApplicationController
   before_action :set_event, only: [:show, :edit, :update, :destroy]
 
-  # GET /events
+  # GET /events 
   # GET /events.json
   def index
-    @events = current_user.events
-    # @events = current_user.attendances.where("accepted IS TRUE").map(&:event).compact
-    # @events = Event.all
-
-    @pending_attendances = Attendance.where('attendee_id = current_user.id AND accepted IS NULL')
+    @events = current_user.attendances.where("accepted IS TRUE").map(&:event).compact
+    @events = Event.all
+    @user_id = current_user.id 
+    @pending_attendances = current_user.attendances.where("accepted IS NULL")
   end
 
   def attendances
@@ -42,7 +41,6 @@ class EventsController < ApplicationController
     @event = current_user.events.new(event_params)
     @event.creator = current_user
     # @event.address = params[:event][:location_attributes][:address]
-    binding.pry
 
     respond_to do |format|
       if @event.save

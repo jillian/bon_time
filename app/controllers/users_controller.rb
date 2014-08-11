@@ -10,6 +10,8 @@ class UsersController < Devise::RegistrationsController
     end
   end
 
+
+
   def show
     if user_signed_in?
       @user = User.find params[:id]

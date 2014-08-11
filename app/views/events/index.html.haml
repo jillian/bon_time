@@ -1,24 +1,25 @@
-/ / - if @pending_attendances.any?
-/ / - if creator_id != current_user.id
-
-/ %h2 Event Invites
-/ %table
-/   %thead
-/     %tr
-/       %th What?
-/       %th Where?
-/       %th What time?
-/       %th With?
-/       %th
-/   %tbody
-/   - @pending_attendances.each do |invitation|
-/     %tr
-/       %td= invitation.event.name
-/       %td= invitation.event.location.address
-/       %td= invitation.event.start_time
-/       %td= User.find(invitation.event.creator_id).name
-/       %td= link_to "Accept", accept_invite_event_attendance_path(invitation.event.id, invitation.id), method: :post, class: "btn btn-primary"
-/       %td= link_to "Out", decline_invite_event_attendance_path(invitation.event.id, invitation.id), method: :post, class: "btn btn-primary"
+= @user_id
+- if @pending_attendances.count == 0
+  %h2 You have no event invites
+- else
+  %h2 Event Invites
+  %table
+    %thead
+      %tr
+        %th What?
+        %th Where?
+        %th What time?
+        %th With?
+        %th
+    %tbody
+    - @pending_attendances.each do |attendance|
+      %tr
+        %td= attendance.event.name
+        %td= attendance.event.location.address
+        %td= attendance.event.start_time
+        %td= User.find(attendance.event.creator_id).name
+        %td= link_to "Accept", accept_invite_event_attendance_path(attendance.event.id, attendance.id), method: :post, class: "btn btn-primary"
+        %td= link_to "Out", decline_invite_event_attendance_path(attendance.event.id, attendance.id), method: :post, class: "btn btn-primary"
 
 - if @events.count == 0
   %h1 No upcoming events
