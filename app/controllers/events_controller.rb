@@ -5,8 +5,7 @@ class EventsController < ApplicationController
   # GET /events.json
   def index
     # @events = current_user.events
-    @events = current_user.attendances.where("accepted IS TRUE")
-    # .map(&:event).compact
+    @events = current_user.attendances.where("accepted IS TRUE").map(&:event).compact
     @user_id = current_user.id 
     @pending_attendances = current_user.attendances.where("accepted IS NULL")
   end
@@ -18,7 +17,7 @@ class EventsController < ApplicationController
   # GET /events/1
   # GET /events/1.json
   def show
-    # @event = current_user.events.find(params[:id])
+    @event = current_user.events.find(params[:id])
   end
 
   # GET /events/new
@@ -42,27 +41,30 @@ class EventsController < ApplicationController
     @event = current_user.events.new(event_params)
     @event.creator = current_user
     # @event.address = params[:event][:location_attributes][:address]
-
+    binding.pry
     respond_to do |format|
       if @event.save
-        attendance = Attendance.new(
-          transport_mode: params[:event][:attendances_attributes]["0"][:transport_mode],
-
-          event_id: @event.id,
-          starting_location_id: params[:event][:attendances_attributes]["1"][:location_id],
-          accepted: 'TRUE',
-          creator_id: current_user.id)
-          binding.pry
-        attendance.save!
-
-        pending_attendance = Attendance.new(
-          event_id: @event.id,
-          creator_id: @event.creator_id,
-          attendee_id: params[:attendances][:attendee_id]
+        attendance = @event.attendances.create!(params[:event][:attendances_attributes]["0"].merge( { accepted: true, attendee: current_user, creator: current_user})
           )
-        pending_attendance.save!
+          # transport_mode: 
+          # attendance.accepted = true
+          # attendance.attendee = current_user
+          # attendance.creator = current_user
 
-        flash[:notice] = "Invite sent"
+          # [:transport_mode],
+          # starting_location_id: params[:event][:attendances_attributes]["0"][:location_id],
+          # accepted: 'TRUE',
+          # attendee_id: current_user.id,
+          # creator_id: current_user.id)
+
+        if params[:attendances][:attendee_id].present?
+          pending_attendance = @event.attendances.create!(
+            creator_id: @event.creator_id,
+            attendee_id: params[:attendances][:attendee_id]
+            )
+
+          flash[:notice] = "Invite sent"
+        end
 
         format.html { redirect_to [@user, @event], notice: 'Event was successfully created.' }
         format.json { render action: 'show', status: :created, location: @event }

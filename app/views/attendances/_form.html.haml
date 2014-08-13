@@ -1,19 +1,21 @@
-= form_for @attendance do |f|
+= form_for(@attendance, url: event_attendance_path(@event, @attendance)) do |f|
   - if @attendance.errors.any?
     #error_explanation
-      %h2= "#{pluralize(@attendance.errors.count, "error")} prohibited this attendance from being saved:"
+      %h2 #{pluralize(@attendance.errors.count, "error")} prohibited this attendance from being saved:
       %ul
         - @attendance.errors.full_messages.each do |msg|
           %li= msg
 
+  .field        
+    = f.select :transport_mode, {       |
+      "Driving"            => "DRIVING",    |
+      "Walking"            => "WALKING",    |
+      "Bike"               => "BICYCLING",  |
+      "Public Transport"   => "TRANSIT"},   |
+      selected: "Public Transport"          |
+
   .field
-    = f.label :user
-    = f.text_field :user
-  .field
-    = f.label :event
-    = f.text_field :event
-  .field
-    = f.label :location
-    = f.text_field :location
+
+    = f.collection_select(:starting_location_id, current_user.locations, :id, :location_label, {prompt: "Leaving from?", selected: ""})
   .actions
     = f.submit 'Save'

@@ -19,6 +19,8 @@ class AttendancesController < ApplicationController
 
   # GET /attendances/1/edit
   def edit
+    @event = Event.find(params[:event_id])
+    @attendance = @event.attendances.find(params[:id])
   end
 
   # POST /attendances
@@ -42,9 +44,12 @@ class AttendancesController < ApplicationController
   # PATCH/PUT /attendances/1
   # PATCH/PUT /attendances/1.json
   def update
+    @event = Event.find(params[:event_id])
+    @attendance = @event.attendances.find(params[:id])
+    @attendance.accepted = true
     respond_to do |format|
       if @attendance.update(attendance_params)
-        format.html { redirect_to @attendance, notice: 'Attendance was successfully updated.' }
+        format.html { redirect_to event_path(@event), notice: 'Attendance was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: 'edit' }
@@ -54,21 +59,9 @@ class AttendancesController < ApplicationController
   end
 
 
-  def accept_invite
-    @attendance = Attendance.find(params[:id])
-    @attendance.accepted = 'TRUE',
-    @attendance.save
-    binding.pry
-    if @attendance.save
-      event = Event.find(@attendance.event_id)
-      starting_location_id = Location.
-      current_user.events << event
-    end
-    redirect_to :back
-  end
-
   def decline_invite
-    @attendance = Attendance.find(params[:id])
+    @event = Event.find(params[:event_id])
+    @attendance = @event.attendances.find(params[:id])
     @attendance.accepted = false
     @attendance.save!
     # No need to save the event to the user's events here
@@ -103,6 +96,6 @@ class AttendancesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def attendance_params
-      params.require(:attendance).permit(:attendee, :attendee_id, :location_id, :event_id, :creator_id, :accepted)
+      params.require(:attendance).permit(:attendee, :attendee_id, :starting_location_id, :event_id, :transport_mode, :creator_id, :accepted)
     end
 end

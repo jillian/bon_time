@@ -31,11 +31,9 @@
       "Bike"               => "BICYCLING",  |
       "Public Transport"   => "TRANSIT"},   |
       selected: "Public Transport"          |
-  %br
-    
-  = f.fields_for :attendances do |start|
+    %br
     .field
-      = start.collection_select(:location_id, current_user.locations, :id, :location_label, {prompt: "Leaving from?", selected: ""})
+      = atten.collection_select(:starting_location_id, current_user.locations, :id, :location_label, {prompt: "Leaving from?", selected: ""})
   %br
 
   = fields_for :attendances do |inv|

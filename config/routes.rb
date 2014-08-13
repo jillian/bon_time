@@ -16,10 +16,8 @@ BonTime::Application.routes.draw do
   resources :events do
     match '/events/new', to: 'events#create', via: :post
     resources :attendances do
-    # , only: [:create] do
       member do
         post :send_invite
-        post :accept_invite
         post :decline_invite
       end
     end

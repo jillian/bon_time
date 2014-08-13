@@ -29,7 +29,7 @@ function updateclock(){
 
   /*****trip duration with Google Maps API **************/
 
-  directionsService = new google.maps.DirectionsService();
+  var directionsService = new google.maps.DirectionsService();
 
   function calcRoute() {
 
@@ -54,13 +54,14 @@ function updateclock(){
   var getTripTime = function(response, status) {
     if (status == google.maps.DirectionsStatus.OK) {
      var trip_time = response.routes[0].legs[0].duration.text;
-     alert("The trip time is " + trip_time + " units")
+     console.log("The trip time is " + trip_time + " units")
     } else{
-      alert("something went wrong")
+      console.log("something went wrong")
     }
   };
 
-  // Javascript Geolocation API
+  //************** Javascript Geolocation API**************//
+
   var getDirections = function(location) {
     directionsDisplay = new google.maps.DirectionsRenderer();
     new google.maps.DirectionsService().route(request, getTripTime);
@@ -72,10 +73,11 @@ function updateclock(){
     navigator.geolocation
       .watchPosition(getDirections, handleLocationError);
   } else{
-    alert("oops, this browser does not support the HTML5 geolocation API")
+    console.log("oops, this browser does not support the HTML5 geolocation API")
   }
 
   calcRoute()
+  //************** Javascript Geolocation API**************//
 
   /********end of trip duration calculation***********/
 });
