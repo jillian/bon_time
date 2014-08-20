@@ -3,6 +3,9 @@ $(document).ready(function(){
   console.log("heyooo")
 
 /*******clock ********/
+function clock() {
+
+
   var $hands = $('div.hand')
 
   window.requestAnimationFrame = window.requestAnimationFrame
@@ -24,6 +27,11 @@ function updateclock(){
   }
 
   requestAnimationFrame(updateclock)
+  };
+
+  if (window.showClock) {
+    clock();
+  };
 
   /*****end of clock ******/
 
@@ -34,16 +42,16 @@ function updateclock(){
   function calcRoute() {
 
     var request = {
-      origin: new google.maps.LatLng(window.starting_location.lat,starting_location.lng),
-      destination: new google.maps.LatLng(window.event_location.lat,event_location.lng),
+      origin: new google.maps.LatLng(window.starting_location.lat, window.starting_location.lng),
+      destination: new google.maps.LatLng(window.event_location.lat, window.event_location.lng),
       travelMode: google.maps.TravelMode[transport_mode]
     };
 
     directionsService.route(request, function(response, status){
       var trip_time = response.routes[0].legs[0].duration.text;
       var trip_text = "The trip time is " + trip_time
-      console.log(trip_text);
       $('#trip_length').html('<h1>'+trip_text+'</h1>');
+      // ajax request -> send duration to attendance model
     });
   };
 
@@ -54,30 +62,37 @@ function updateclock(){
   var getTripTime = function(response, status) {
     if (status == google.maps.DirectionsStatus.OK) {
      var trip_time = response.routes[0].legs[0].duration.text;
-     console.log("The trip time is " + trip_time + " units")
+
     } else{
       console.log("something went wrong")
     }
   };
 
-  //************** Javascript Geolocation API**************//
-
   var getDirections = function(location) {
+
+    var request = {
+      origin: new google.maps.LatLng(window.starting_location.lat, window.starting_location.lng),
+      destination: new google.maps.LatLng(window.event_location.lat, window.event_location.lng),
+      travelMode: google.maps.TravelMode[transport_mode]
+    };
+
     directionsDisplay = new google.maps.DirectionsRenderer();
     new google.maps.DirectionsService().route(request, getTripTime);
   };
   
+  //************** USE GEOCODER
+
   if (navigator.geolocation) {
-    navigator.geolocation
-      .getCurrentPosition(getDirections, handleLocationError);
-    navigator.geolocation
-      .watchPosition(getDirections, handleLocationError);
+    navigator.geolocation.getCurrentPosition(getDirections, handleLocationError);
+    navigator.geolocation.watchPosition(getDirections, handleLocationError);
   } else{
     console.log("oops, this browser does not support the HTML5 geolocation API")
   }
 
-  calcRoute()
-  //************** Javascript Geolocation API**************//
+  if (window.runCalc) {
+    calcRoute();
+  };
+
 
   /********end of trip duration calculation***********/
 });

@@ -1,9 +1,10 @@
 class TwilioAlert
 
-class TextMessage
   def initialize content, number
     @content, @to_number = content, number
-    self
+    self 
+    #otherwise you don't have access ot instance methods
+    #assigning variables returns nil, we want it to return the instance so we can send it
   end
 
   def client
@@ -17,5 +18,4 @@ class TextMessage
       from: ENV["TWILIO_NUM"]
       )
   end #This is an instance method. Called directly after new, which calls initialize
-end
 end

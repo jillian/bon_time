@@ -12,6 +12,9 @@ class Event < ActiveRecord::Base
   accepts_nested_attributes_for :attendees
 
   # after_save :create_reminder_jobs
+  # after_save is part of ActiveRecord
+  # after_create will only be called once you save sth .. guides.rubyonr.org
+  # if (something changed)
 
   # def create_reminder_jobs
   #   @event = Event.new

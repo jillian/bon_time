@@ -1,8 +1,8 @@
 var directionsService = new google.maps.DirectionsService();
 
 function calcRoute() {
-  var start = new google.maps.LatLng(window.starting_location.lat,starting_location.lng),
-  var end = new google.maps.LatLng(window.event_location.lat,event_location.lng);
+  var start = new google.maps.LatLng(window.starting_location.lat, window.starting_location.lng),
+  var end = new google.maps.LatLng(window.event_location.lat, window.event_location.lng);
   var travelMode: google.maps.TravelMode[transport_mode]
   var request = {
     origin:start,
@@ -13,5 +13,6 @@ function calcRoute() {
     if (status == google.maps.DirectionsStatus.OK) {
       directionsDisplay.setDirections(result);
     }
+  
   });
 }

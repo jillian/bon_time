@@ -10,14 +10,12 @@ class EventsController < ApplicationController
     @pending_attendances = current_user.attendances.where("accepted IS NULL")
   end
 
-  def attendances
-    @pending_attendances = Attendance.where('attendee_id = current_user.id AND accepted IS NULL')
-  end
 
   # GET /events/1
   # GET /events/1.json
   def show
     @event = current_user.events.find(params[:id])
+    
   end
 
   # GET /events/new
@@ -41,7 +39,6 @@ class EventsController < ApplicationController
     @event = current_user.events.new(event_params)
     @event.creator = current_user
     # @event.address = params[:event][:location_attributes][:address]
-    binding.pry
     respond_to do |format|
       if @event.save
         attendance = @event.attendances.create!(params[:event][:attendances_attributes]["0"].merge( { accepted: true, attendee: current_user, creator: current_user})

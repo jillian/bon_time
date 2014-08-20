@@ -47,6 +47,9 @@ class AttendancesController < ApplicationController
     @event = Event.find(params[:event_id])
     @attendance = @event.attendances.find(params[:id])
     @attendance.accepted = true
+
+    #method for ajax request
+    
     respond_to do |format|
       if @attendance.update(attendance_params)
         format.html { redirect_to event_path(@event), notice: 'Attendance was successfully updated.' }

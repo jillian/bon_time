@@ -23,15 +23,14 @@
    window.event_location = {
     lat: #{@event.location.latitude},
     lng: #{@event.location.longitude}
-    }
-/ :javascript
-/    window.starting_location = {
-/     lat: #{@event.attendances.first.location.latitude},
-/     lng: #{@event.attendances.first.location.longitude}
-/     }
-:javascript
-  window.transport_mode = '#{@event.attendances.where(creator_id: current_user.id).first.try(:transport_mode)}'
-
+    };
+   window.starting_location = {
+    lat: #{@event.attendances.first.starting_location.latitude},
+    lng: #{@event.attendances.first.starting_location.longitude}
+    };
+  window.transport_mode = '#{@event.attendances.where(creator_id: current_user.id).first.try(:transport_mode)}';
+  console.log("transport_mode");
+  window.runCalc = true;
 #trip_length
 
 
