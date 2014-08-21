@@ -13,6 +13,15 @@ function calcRoute() {
     if (status == google.maps.DirectionsStatus.OK) {
       directionsDisplay.setDirections(result);
     }
-  
-  });
+    var trip_time = response.routes[0].legs[0].duration.text;
+    var trip_text = "The trip time is " + trip_time
+    $('#trip_length').html('<h1>'+trip_text+'</h1>');
+      // ajax request -> send duration to attendance model
+    })
+  }
+  function test() {
+    console.log("jills the best");
+  }
+  test();
+  );
 }

@@ -6,8 +6,8 @@ class Event < ActiveRecord::Base
     class_name: "User", 
     foreign_key: "attendee_id"
   belongs_to :location
-  
   accepts_nested_attributes_for :location
+
   accepts_nested_attributes_for :attendances, reject_if: proc { |attr| attr["user_id"].blank? }
   accepts_nested_attributes_for :attendees
 

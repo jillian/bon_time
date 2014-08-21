@@ -7,7 +7,8 @@ class Location < ActiveRecord::Base
   geocoded_by :full_address
   after_validation :geocode#, :if => address_changed?
   # validates :address, presence: true
-  #
+  
+  has_many :events
 
   def coords
     "#{latitude} #{longitude}"

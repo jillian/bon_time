@@ -36,24 +36,15 @@ class EventsController < ApplicationController
   # POST /events
   # POST /events.json
   def create
+    binding.pry
     @event = current_user.events.new(event_params)
+    #location??? @event.location_id
     @event.creator = current_user
-    # @event.address = params[:event][:location_attributes][:address]
+
     respond_to do |format|
       if @event.save
         attendance = @event.attendances.create!(params[:event][:attendances_attributes]["0"].merge( { accepted: true, attendee: current_user, creator: current_user})
           )
-          # transport_mode: 
-          # attendance.accepted = true
-          # attendance.attendee = current_user
-          # attendance.creator = current_user
-
-          # [:transport_mode],
-          # starting_location_id: params[:event][:attendances_attributes]["0"][:location_id],
-          # accepted: 'TRUE',
-          # attendee_id: current_user.id,
-          # creator_id: current_user.id)
-
         if params[:attendances][:attendee_id].present?
           pending_attendance = @event.attendances.create!(
             creator_id: @event.creator_id,
@@ -102,7 +93,6 @@ class EventsController < ApplicationController
       @event = Event.find(params[:id])
     end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
     def event_params
       params.require(:event).permit(:name, :start_time, :date, :time, :creator, :attendances["attendee_id"], :attendances["creator_id"], {location_attributes:[:address, :city, :postcode, :latitude, :longitude]}, {attendances_attributes:[:transport_mode, :attendee_id, :creator_id, :name, :starting_location_id, :accepted]})
     end
