@@ -24,7 +24,6 @@ class EventsController < ApplicationController
     @event.build_location
     # 5.times do
     @event.attendances.build
-    # end
     @event.build_creator
   end
 
@@ -36,7 +35,6 @@ class EventsController < ApplicationController
   # POST /events
   # POST /events.json
   def create
-    binding.pry
     @event = current_user.events.new(event_params)
     #location??? @event.location_id
     @event.creator = current_user

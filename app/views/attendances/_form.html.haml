@@ -15,7 +15,29 @@
       selected: "Public Transport"          |
 
   .field
+    = f.collection_select(:starting_location_id, current_user.locations, :id, :location_label, {prompt: "Leaving from?", selected: ""}, id: "startingLocation")
 
-    = f.collection_select(:starting_location_id, current_user.locations, :id, :location_label, {prompt: "Leaving from?", selected: ""})
+  = f.hidden_field(:trip_duration, id: "trip_duration") 
+
   .actions
-    = f.submit 'Save'
+    = f.submit 'Save', disabled: true, id: "submit"
+
+:javascript
+  $(document).ready(function(){
+    $("#startingLocation").change(function() {
+      var id = this.value; 
+      var loc = $.grep(LocationManager.locations, function(l) { 
+        return l.id == id;
+      })[0];
+      LocationManager.start.lat = loc.lat;
+      LocationManager.start.lng = loc.long;
+      LocationManager.calcRoute();
+    });
+    LocationManager.locations = #{current_user.json_locations};
+    LocationManager.start.lat = #{@event.attendances.first.starting_location.latitude};
+    LocationManager.start.lng = #{@event.attendances.first.starting_location.longitude};
+    LocationManager.event.lat = #{@event.location.latitude};
+    LocationManager.event.lng = #{@event.location.longitude};
+    LocationManager.transport_mode = "#{@event.attendances.where(attendee_id: current_user.id).first.try(:transport_mode)}";
+    LocationManager.calcRoute();
+  });

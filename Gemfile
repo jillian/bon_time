@@ -22,6 +22,8 @@ gem 'sprockets-rails', :require => 'sprockets/railtie'
 gem 'autoprefixer-rails'
 
 group :development, :test do
+  gem 'teaspoon'
+  gem 'phantomjs'
   gem 'rspec-rails', '2.14.1'
   gem 'factory_girl_rails'
   gem "pry-rails"

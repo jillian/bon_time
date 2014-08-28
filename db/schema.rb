@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140723183148) do
+ActiveRecord::Schema.define(version: 20140827163242) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -20,12 +20,12 @@ ActiveRecord::Schema.define(version: 20140723183148) do
     t.integer  "event_id"
     t.integer  "starting_location_id"
     t.boolean  "accepted"
-    t.integer  "trip_duration"
     t.integer  "attendee_id"
     t.integer  "creator_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "transport_mode"
+    t.integer  "trip_duration"
   end
 
   add_index "attendances", ["event_id"], name: "index_attendances_on_event_id", using: :btree

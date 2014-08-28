@@ -23,22 +23,24 @@
       = loc.label :postcode
       = loc.text_field :postcode
   %br
-
-  = f.fields_for :attendances do |atten|
-    = atten.select :transport_mode, {       |
-      "Driving"            => "DRIVING",    |
-      "Walking"            => "WALKING",    |
-      "Bike"               => "BICYCLING",  |
-      "Public Transport"   => "TRANSIT"},   |
-      selected: "Public Transport"          |
+  
+  - if !@event.id
+    = f.fields_for :attendances do |atten|
+      = atten.select :transport_mode, {       |
+        "Driving"            => "DRIVING",    |
+        "Walking"            => "WALKING",    |
+        "Bike"               => "BICYCLING",  |
+        "Public Transport"   => "TRANSIT"},   |
+        selected: "Public Transport"          |
+      %br
+      .field
+        = atten.collection_select(:starting_location_id, current_user.locations, :id, :location_label, {prompt: "Leaving from?", selected: ""})
     %br
-    .field
-      = atten.collection_select(:starting_location_id, current_user.locations, :id, :location_label, {prompt: "Leaving from?", selected: ""})
-  %br
 
-  = fields_for :attendances do |inv|
-    .invite_field
-      = inv.collection_select(:attendee_id, current_user.friends, :id, :name, {prompt: "Invite a friend", selected: ""})
+  
+    = fields_for :attendances do |inv|
+      .invite_field
+        = inv.collection_select(:attendee_id, current_user.friends, :id, :name, {prompt: "Invite a friend", selected: ""})
 
   %br
   .actions

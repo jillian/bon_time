@@ -47,9 +47,9 @@ class AttendancesController < ApplicationController
     @event = Event.find(params[:event_id])
     @attendance = @event.attendances.find(params[:id])
     @attendance.accepted = true
-
-    #method for ajax request
     
+    #method for ajax request
+    binding.pry
     respond_to do |format|
       if @attendance.update(attendance_params)
         format.html { redirect_to event_path(@event), notice: 'Attendance was successfully updated.' }
@@ -99,6 +99,6 @@ class AttendancesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def attendance_params
-      params.require(:attendance).permit(:attendee, :attendee_id, :starting_location_id, :event_id, :transport_mode, :creator_id, :accepted)
+      params.require(:attendance).permit(:attendee, :attendee_id, :starting_location_id, :event_id, :transport_mode, :trip_duration, :creator_id, :accepted)
     end
 end

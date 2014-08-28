@@ -21,4 +21,9 @@ class User < ActiveRecord::Base
   def name
     "#{first_name} #{last_name}"
   end
+
+  def json_locations
+    locations = self.locations.map { |l| { id: l.id, lat: l.latitude, long: l.latitude } }
+    locations.to_json
+  end
 end

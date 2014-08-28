@@ -17,20 +17,16 @@
   = @event.attendances.first.transport_mode
 %p
 
-#map-canvas
-
 :javascript
-   window.event_location = {
-    lat: #{@event.location.latitude},
-    lng: #{@event.location.longitude}
-    };
-   window.starting_location = {
-    lat: #{@event.attendances.first.starting_location.latitude},
-    lng: #{@event.attendances.first.starting_location.longitude}
-    };
-  window.transport_mode = '#{@event.attendances.where(creator_id: current_user.id).first.try(:transport_mode)}';
-  console.log("transport_mode");
-  window.runCalc = true;
+  $(document).ready(function(){
+    LocationManager.start.lat = #{@event.attendances.first.starting_location.latitude};
+    LocationManager.start.lng = #{@event.attendances.first.starting_location.longitude};
+    LocationManager.end.lat = #{@event.location.latitude};
+    LocationManager.end.lng = #{@event.location.longitude};
+    LocationManager.transport_mode = "#{@event.attendances.where(attendee_id: current_user.id).first.try(:transport_mode)}";
+    LocationManager.calcRoute();
+  });
+
 #trip_length
 
 
